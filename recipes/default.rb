@@ -18,6 +18,10 @@
 #
 include_recipe 'chef_handler'
 
+dbag = Chef::EncryptedDataBagItem.load("mailgun", node[:mailgun][:data_bag_name])
+login = dbag['login']
+password = dbag['password']
+
 gem_package "pony" do
   action :install
 end
@@ -27,4 +31,10 @@ cookbook_file "#{node['chef_handler']['handler_path']}/mailgun_sender.rb" do
   owner "root"
   group "root"
   mode 0755
+end
+
+chef_handler "Mailgun::Mailgun_Sender" do
+  source "#{node.chef_handler.handler_path}/mailgun_sender.rb"
+  arguments [login, password]
+  action :enable
 end

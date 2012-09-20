@@ -4,14 +4,13 @@ require 'pony'
 module Mailgun
   class Mailgun_Sender < Chef::Handler
 
-    def initialize(messages, login, password)
-      @messages = messages
+    def initialize(login, password)
       @login = login
       @password = password
     end
 
     def report
-      @messages.each do |message|
+      node.run_state[:messages].each do |message|
         Pony.mail({
           :to => message[:to],
           :subject => message[:subject],
