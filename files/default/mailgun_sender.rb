@@ -10,6 +10,7 @@ module Mailgun
     end
 
     def report
+      node.run_state[:messages] ||= []
       node.run_state[:messages].each do |message|
         Pony.mail({
           :to => message[:to],
