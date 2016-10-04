@@ -1,3 +1,4 @@
+name             "mailgun"
 maintainer       "Rackspace"
 maintainer_email "cooks@lists.rackspace.com"
 license          "Apache 2.0"
